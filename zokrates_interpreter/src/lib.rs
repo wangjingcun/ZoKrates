@@ -71,7 +71,7 @@ impl Interpreter {
                 Statement::Constraint(s) => match s.lin.is_assignee(&witness) {
                     true => {
                         let val = evaluate_quad(&witness, &s.quad).unwrap();
-                        witness.insert(s.lin.value.get(0).unwrap().0, val);
+                        witness.insert(s.lin.value.first().unwrap().0, val);
                     }
                     false => {
                         let lhs_value = evaluate_quad(&witness, &s.quad).unwrap();

@@ -14,7 +14,6 @@ use crate::typed::{
 use crate::common::{operators::*, WithSpan};
 
 use num_bigint::BigUint;
-use std::convert::TryFrom;
 use std::fmt;
 use std::ops::*;
 use zokrates_field::Field;
@@ -581,7 +580,7 @@ impl<'ast, T: Field> FieldElementExpression<'ast, T> {
                                 )
                                 .map_err(|(e, _)| match e {
                                     TypedExpressionOrSpread::Expression(e) => {
-                                        IntExpression::try_from(e).unwrap()
+                                        IntExpression::from(e)
                                     }
                                     TypedExpressionOrSpread::Spread(a) => {
                                         IntExpression::select(a.array, 0u32)
@@ -704,7 +703,7 @@ impl<'ast, T: Field> UExpression<'ast, T> {
                                 )
                                 .map_err(|(e, _)| match e {
                                     TypedExpressionOrSpread::Expression(e) => {
-                                        IntExpression::try_from(e).unwrap()
+                                        IntExpression::from(e)
                                     }
                                     TypedExpressionOrSpread::Spread(a) => {
                                         IntExpression::select(a.array, 0u32)

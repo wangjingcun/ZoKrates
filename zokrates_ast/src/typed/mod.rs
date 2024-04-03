@@ -1771,8 +1771,7 @@ impl<'ast, T: Field> ArrayValueExpression<'ast, T> {
             .nth(index)
             .unwrap()
             .clone()
-            .try_into()
-            .unwrap()
+            .into()
     }
 }
 

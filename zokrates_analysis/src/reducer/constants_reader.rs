@@ -8,8 +8,6 @@ use zokrates_ast::typed::{
 };
 use zokrates_field::Field;
 
-use std::convert::TryFrom;
-
 pub struct ConstantsReader<'a, 'ast, T> {
     constants: &'a ConstantDefinitions<'ast, T>,
 }
@@ -41,7 +39,7 @@ impl<'a, 'ast, T: Field> Folder<'ast, T> for ConstantsReader<'a, 'ast, T> {
                 let c = self.fold_canonical_constant_identifier(c);
 
                 match self.constants.get(&c).cloned() {
-                    Some(e) => match UExpression::try_from(e).unwrap().into_inner() {
+                    Some(e) => match UExpression::from(e).into_inner() {
                         UExpressionInner::Value(v) => DeclarationConstant::Concrete(v.value as u32),
                         _ => unreachable!(),
                     },

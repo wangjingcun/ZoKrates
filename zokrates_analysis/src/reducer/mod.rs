@@ -245,7 +245,7 @@ impl<'ast, 'a, T: Field> ResultFolder<'ast, T> for Reducer<'ast, 'a, T> {
                 self.statement_buffer.extend(definition);
 
                 let e = match self.propagator.constants.get(&identifier) {
-                    Some(v) => E::try_from(v.clone()).unwrap().into_inner(),
+                    Some(v) => E::from(v.clone()).into_inner(),
                     None => E::identifier(identifier),
                 };
 
