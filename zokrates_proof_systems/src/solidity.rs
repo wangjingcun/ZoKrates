@@ -456,7 +456,7 @@ library Pairing {
         input[3] = p2.Y;
         bool success;
         assembly {
-            success := staticcall(sub(gas(), 2000), 6, input, 0xc0, r, 0x60)
+            success := staticcall(sub(gas(), 2000), 6, input, 0x80, r, 0x40)
             // Use "invalid" to make gas estimation work
             switch success case 0 { invalid() }
         }
