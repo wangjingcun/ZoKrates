@@ -251,7 +251,7 @@ impl<'ast, T: Field> From<DeclarationConstant<'ast, T>> for UExpression<'ast, T>
             DeclarationConstant::Constant(v) => {
                 UExpression::identifier(FrameIdentifier::from(v).into()).annotate(UBitwidth::B32)
             }
-            DeclarationConstant::Expression(e) => e.try_into().unwrap(),
+            DeclarationConstant::Expression(e) => e.into(),
         }
     }
 }

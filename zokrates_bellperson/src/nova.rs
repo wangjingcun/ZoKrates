@@ -221,7 +221,7 @@ impl<'ast, T: Field + BellpersonFieldExtensions + Cycle> StepCircuit<T::Bellpers
         // populate the witness if we got some input values
         // this is a bit hacky and in particular generates the witness in all cases if there are no inputs
         if input
-            .get(0)
+            .first()
             .map(|n| n.get_value().is_some())
             .unwrap_or(true)
         {

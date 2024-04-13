@@ -1087,8 +1087,7 @@ fn fold_field_expression<'ast, T: Field>(
             .fold_identifier_expression(typed::ConcreteType::FieldElement, id)
             .pop()
             .unwrap()
-            .try_into()
-            .unwrap(),
+            .into(),
         typed::FieldElementExpression::Add(e) => {
             zir::FieldElementExpression::Add(f.fold_binary_expression(statements_buffer, e))
         }
@@ -1134,27 +1133,23 @@ fn fold_field_expression<'ast, T: Field>(
             .fold_conditional_expression(statements_buffer, c)
             .pop()
             .unwrap()
-            .try_into()
-            .unwrap(),
+            .into(),
         typed::FieldElementExpression::FunctionCall(..) => unreachable!(""),
         typed::FieldElementExpression::Select(select) => f
             .fold_select_expression(statements_buffer, select)
             .pop()
             .unwrap()
-            .try_into()
-            .unwrap(),
+            .into(),
         typed::FieldElementExpression::Member(m) => f
             .fold_member_expression(statements_buffer, m)
             .pop()
             .unwrap()
-            .try_into()
-            .unwrap(),
+            .into(),
         typed::FieldElementExpression::Element(element) => f
             .fold_element_expression(statements_buffer, element)
             .pop()
             .unwrap()
-            .try_into()
-            .unwrap(),
+            .into(),
         typed::FieldElementExpression::Block(block) => {
             block
                 .statements
@@ -1239,8 +1234,7 @@ fn fold_boolean_expression<'ast, T: Field>(
             .fold_identifier_expression(typed::ConcreteType::Boolean, id)
             .pop()
             .unwrap()
-            .try_into()
-            .unwrap(),
+            .into(),
         typed::BooleanExpression::FieldEq(e) => f.fold_eq_expression(statements_buffer, e),
         typed::BooleanExpression::BoolEq(e) => f.fold_eq_expression(statements_buffer, e),
         typed::BooleanExpression::ArrayEq(e) => f.fold_eq_expression(statements_buffer, e),
@@ -1272,27 +1266,23 @@ fn fold_boolean_expression<'ast, T: Field>(
             .fold_conditional_expression(statements_buffer, c)
             .pop()
             .unwrap()
-            .try_into()
-            .unwrap(),
+            .into(),
         typed::BooleanExpression::FunctionCall(..) => unreachable!(),
         typed::BooleanExpression::Select(select) => f
             .fold_select_expression(statements_buffer, select)
             .pop()
             .unwrap()
-            .try_into()
-            .unwrap(),
+            .into(),
         typed::BooleanExpression::Member(m) => f
             .fold_member_expression(statements_buffer, m)
             .pop()
             .unwrap()
-            .try_into()
-            .unwrap(),
+            .into(),
         typed::BooleanExpression::Element(m) => f
             .fold_element_expression(statements_buffer, m)
             .pop()
             .unwrap()
-            .try_into()
-            .unwrap(),
+            .into(),
     }
     .span(span)
 }
@@ -1327,8 +1317,7 @@ fn fold_uint_expression_inner<'ast, T: Field>(
         }
         typed::UExpressionInner::Value(v) => zir::UExpressionInner::Value(v),
         typed::UExpressionInner::Identifier(id) => {
-            zir::UExpression::try_from(f.fold_identifier_expression(bitwidth, id).pop().unwrap())
-                .unwrap()
+            zir::UExpression::from(f.fold_identifier_expression(bitwidth, id).pop().unwrap())
                 .into_inner()
         }
         typed::UExpressionInner::Add(e) => {
@@ -1411,33 +1400,29 @@ fn fold_uint_expression_inner<'ast, T: Field>(
         typed::UExpressionInner::FunctionCall(..) => {
             unreachable!("function calls should have been removed")
         }
-        typed::UExpressionInner::Select(select) => zir::UExpression::try_from(
+        typed::UExpressionInner::Select(select) => zir::UExpression::from(
             f.fold_select_expression(statements_buffer, select)
                 .pop()
                 .unwrap(),
         )
-        .unwrap()
         .into_inner(),
-        typed::UExpressionInner::Member(m) => zir::UExpression::try_from(
+        typed::UExpressionInner::Member(m) => zir::UExpression::from(
             f.fold_member_expression(statements_buffer, m)
                 .pop()
                 .unwrap(),
         )
-        .unwrap()
         .into_inner(),
-        typed::UExpressionInner::Element(m) => zir::UExpression::try_from(
+        typed::UExpressionInner::Element(m) => zir::UExpression::from(
             f.fold_element_expression(statements_buffer, m)
                 .pop()
                 .unwrap(),
         )
-        .unwrap()
         .into_inner(),
-        typed::UExpressionInner::Conditional(c) => zir::UExpression::try_from(
+        typed::UExpressionInner::Conditional(c) => zir::UExpression::from(
             f.fold_conditional_expression(statements_buffer, c)
                 .pop()
                 .unwrap(),
         )
-        .unwrap()
         .into_inner(),
     }
     .span(span)

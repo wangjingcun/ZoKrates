@@ -217,8 +217,8 @@ impl<T: Field> LinComb<T> {
 
     pub fn is_assignee(&self, witness: &Witness<T>) -> bool {
         self.value.len() == 1
-            && self.value.get(0).unwrap().1 == T::from(1)
-            && !witness.0.contains_key(&self.value.get(0).unwrap().0)
+            && self.value.first().unwrap().1 == T::from(1)
+            && !witness.0.contains_key(&self.value.first().unwrap().0)
     }
 
     pub fn try_summand(self) -> Result<(Variable, T), Self> {

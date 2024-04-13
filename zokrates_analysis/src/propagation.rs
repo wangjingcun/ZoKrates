@@ -357,8 +357,7 @@ impl<'ast, T: Field> ResultFolder<'ast, T> for Propagator<'ast, T> {
                     let argument = arguments.last().cloned().unwrap();
                     let argument = argument.into_canonical_constant();
 
-                    match ArrayExpression::try_from(argument)
-                .unwrap()
+                    match ArrayExpression::from(argument)
                 .into_inner()
             {
                 ArrayExpressionInner::Value(v) =>
@@ -397,10 +396,7 @@ impl<'ast, T: Field> ResultFolder<'ast, T> for Propagator<'ast, T> {
                 ) -> TypedExpression<'ast, T> {
                     assert_eq!(arguments.len(), 1);
 
-                    match UExpression::try_from(arguments[0].clone())
-                        .unwrap()
-                        .into_inner()
-                    {
+                    match UExpression::from(arguments[0].clone()).into_inner() {
                         UExpressionInner::Value(v) => {
                             let mut num = v.value;
                             let mut res = vec![];
@@ -493,11 +489,9 @@ impl<'ast, T: Field> ResultFolder<'ast, T> for Propagator<'ast, T> {
 
                                 let bit_width = embed_call.generics[0];
 
-                                match FieldElementExpression::<T>::try_from(
+                                match FieldElementExpression::<T>::from(
                                     embed_call.arguments[0].clone(),
-                                )
-                                .unwrap()
-                                {
+                                ) {
                                     FieldElementExpression::Value(num) => {
                                         let mut acc = num.value;
                                         let mut res = vec![];
@@ -1197,7 +1191,7 @@ impl<'ast, T: Field> ResultFolder<'ast, T> for Propagator<'ast, T> {
                                 // clone only the element
                                 match v.value[n.value as usize].clone() {
                                     TypedExpressionOrSpread::Expression(e) => {
-                                        E::try_from(e).unwrap().into_inner()
+                                        E::from(e).into_inner()
                                     }
                                     _ => unreachable!(),
                                 },
