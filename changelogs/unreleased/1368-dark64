@@ -1,0 +1,1 @@
+Fix staticcall input/output size in `addition` & `scalar_mul`
